@@ -15,6 +15,9 @@
 !.codex/config.toml
 !.codex/AGENTS.md
 
+!.hammerspoon/
+!.hammerspoon/init.lua
+
 !.config/
 !.config/nvim/
 !.config/nvim/init.lua
