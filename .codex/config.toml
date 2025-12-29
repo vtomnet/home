@@ -1,0 +1,26 @@
+#model_provider = "copilot-api"
+model = "gpt-5.2-codex"
+model_reasoning_effort = "medium"
+
+sandbox_mode = "danger-full-access"
+
+[model_providers.copilot-api]
+name = "GitHub Copilot"
+base_url = "http://localhost:4141/v1"
+wire_api = "responses"
+
+[model_providers.cerebras]
+name = "Cerebras"
+base_url = "https://api.cerebras.ai/v1"
+wire_api = "chat"
+env_key = "CEREBRAS_API_KEY"
+
+[model_providers.xai]
+name = "Grok"
+base_url = "https://api.x.ai/v1"
+wire_api = "chat"
+env_key = "XAI_API_KEY"
+
+[notice]
+hide_gpt5_1_migration_prompt = true
+"hide_gpt-5.1-codex-max_migration_prompt" = true

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Coordinate Viewer</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #1a1a1a;
+      color: #fff;
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 20px; font-size: 1.5rem; }
+    .controls { margin-bottom: 20px; }
+    input[type="file"] { color: #fff; }
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
+    #image {
+      display: block;
+      max-width: 100%;
+      cursor: crosshair;
+    }
+    .coordinates {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 1.2rem;
+      border: 1px solid #444;
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Image Coordinate Viewer</h1>
+  <div class="controls">
+    <input type="file" id="fileInput" accept="image/*">
+  </div>
+  <div class="coordinates hidden" id="coords">
+    <span id="coordText">x: 0, y: 0</span>
+  </div>
+  <div class="image-container">
+    <img id="image" class="hidden" alt="Loaded image">
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const image = document.getElementById('image');
+    const coords = document.getElementById('coords');
+    const coordText = document.getElementById('coordText');
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        image.src = url;
+        image.classList.remove('hidden');
+        coords.classList.remove('hidden');
+      }
+    });
+
+    image.addEventListener('mousemove', (e) => {
+      const rect = image.getBoundingClientRect();
+      const scaleX = image.naturalWidth / rect.width;
+      const scaleY = image.naturalHeight / rect.height;
+      const x = Math.round((e.clientX - rect.left) * scaleX);
+      const y = Math.round((e.clientY - rect.top) * scaleY);
+      coordText.textContent = `x: ${x}, y: ${y}`;
+    });
+
+    image.addEventListener('mouseleave', () => {
+      coordText.textContent = `x: -, y: -`;
+    });
+  </script>
+</body>
+</html>
