@@ -1,0 +1,34 @@
+#!/usr/bin/env -S uv --quiet run --script
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "tiktoken", "google-genai"
+# ]
+# ///
+
+import sys
+
+def count_tokens_openai(input_text):
+    import tiktoken
+    enc = tiktoken.encoding_for_model("gpt-4o")
+    return len(enc.encode(input_text))
+
+def count_tokens_gemini(input_text):
+    from google import genai
+    client = genai.Client()
+    return client.models.count_tokens(
+        model="gemini-2.5-flash",
+        contents=input_text
+    ).total_tokens
+
+count_tokens = count_tokens_openai
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "--openai":
+        count_tokens = count_tokens_openai
+    elif sys.argv[1] == "--gemini":
+        count_tokens = count_tokens_gemini
+
+input_text = sys.stdin.read()
+print(count_tokens(input_text))
+#print(f"Roughly {len(input_text)*1/4:.0f} tokens", file=sys.stderr)

@@ -18,6 +18,10 @@
 !.hammerspoon/
 !.hammerspoon/init.lua
 
+!.local/
+!.local/bin/
+!.local/bin/count_tokens
+
 !.config/
 !.config/nvim/
 !.config/nvim/init.lua
