@@ -10,7 +10,7 @@ export path=(
   $path
 )
 
-export LESS="-RSi"
+export LESS="-Ri"
 export GIT_PAGER="less -F"
 export PYTHONSTARTUP=~/.pythonrc
 

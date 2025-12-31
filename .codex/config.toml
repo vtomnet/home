@@ -4,6 +4,9 @@ model_reasoning_effort = "medium"
 
 sandbox_mode = "danger-full-access"
 
+[features]
+web_search_request = true
+
 [model_providers.copilot-api]
 name = "GitHub Copilot"
 base_url = "http://localhost:4141/v1"

@@ -6,22 +6,13 @@ unsetopt histexpand
 
 export HISTSIZE=1000000
 export SAVEHIST=1000000
+export EDITOR=vi
 
-alias lc=eza
-alias cat=bat
-alias vi='nvim'
-alias ca='cursor-agent --force'
-alias a='vi ~n/a.md'
-alias fd='fd -Ig'
+readonly prompt
+PS1='%2~ %% '
 
-chrome() { open -a 'Google Chrome' "$@" && exit; }
-
-for file in /Applications/*.app ~/Applications/*.app; do
-    app=${file:t:r:l:gs/[^a-z0-9]/_/}
-    if ! command -v "$app" >/dev/null; then
-        eval "${app:q} () { open -a ${file:q} \${@:q} && exit; }"
-    fi
-done
+bindkey -e
+bindkey "^[[3~" delete-char # zed needs this for some reason
 
 hash -d d=~/Documents
 hash -d D=~d
@@ -30,13 +21,22 @@ hash -d P=~p
 hash -d n=~/Library/Mobile\ Documents/com~apple~CloudDocs/notes
 hash -d N=~n
 
-readonly prompt
-PS1='%2~ %% '
+alias lc=eza
+#alias cat=bat
+alias vi='nvim'
+alias ca='cursor-agent --force'
+alias a='vim ~n/a.md'
+alias fd='fd -Ig'
+alias chrome='open -a "Google Chrome"'
 
-export EDITOR=vi
+#chrome() { open -a 'Google Chrome' "$@" && exit; }
 
-bindkey -e
-bindkey "^[[3~" delete-char # zed needs this for some reason
+for file in /Applications/*.app ~/Applications/*.app; do
+    app=${file:t:r:l:gs/[^a-z0-9]/_/}
+    if ! command -v "$app" >/dev/null; then
+        eval "${app:q} () { open -a ${file:q} \${@:q} && exit; }"
+    fi
+done
 
 key() {
   for name; do
@@ -64,3 +64,5 @@ conda_init() {
 }
 
 export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3
+
+#source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
