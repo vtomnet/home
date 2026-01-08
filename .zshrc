@@ -22,10 +22,12 @@ hash -d n=~/Library/Mobile\ Documents/com~apple~CloudDocs/notes
 hash -d N=~n
 
 alias lc=eza
+alias ssh='TERM=xterm-256color ssh'
+alias rg='rg --no-ignore'
 #alias cat=bat
 alias vi='nvim'
 alias ca='cursor-agent --force'
-alias a='vim ~n/a.md'
+alias a='vi ~n/a.md'
 alias fd='fd -Ig'
 alias chrome='open -a "Google Chrome"'
 
@@ -39,12 +41,23 @@ for file in /Applications/*.app ~/Applications/*.app; do
 done
 
 key() {
+  local copy=0
+  if [ "$1" = "-c" ]; then
+    copy=1
+    shift
+  fi
+
   for name; do
     while read -r match; do
+      last_key=${${match##*=}%% *}
       eval export "$match"
       echo "Exported ${match%%=*}" >&2
-    done < <(grep -F "$name" ~/.keys)
+    done < <(grep ".*$name.*" ~/.keys)
   done
+
+  if [ "$copy" = 1 ]; then
+    pbcopy <<< "$last_key"
+  fi
 }
 
 key GEMINI OPENAI CEREBRAS XAI 2>/dev/null
@@ -66,3 +79,6 @@ conda_init() {
 export OPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl@3
 
 #source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# bun completions
+[ -s "/Users/tm/.bun/_bun" ] && source "/Users/tm/.bun/_bun"
