@@ -19,6 +19,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.mouse = "a"
 vim.opt.signcolumn = "yes"
 vim.opt.expandtab = true
@@ -31,6 +32,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], { noremap = true })
+vim.keymap.set('n', '<M-Tab>', '<cmd>bnext<CR>', { silent = true })
+vim.keymap.set('n', '<M-S-Tab>', '<cmd>bprev<CR>', { silent = true })
 vim.keymap.set('n', '<Leader>t', '<Cmd>vertical term<CR>')
 vim.keymap.set('n', '<Leader>e', function()
   require("telescope.builtin").find_files({ no_ignore = true })
@@ -46,10 +49,7 @@ require("lazy").setup({
   spec = {
     {
       "lewis6991/gitsigns.nvim",
-      opts = {
-        -- signcolumn = false,
-        -- numhl = true,
-      },
+      opts = {},
     },
 
     {
@@ -63,18 +63,11 @@ require("lazy").setup({
     },
 
     {
-      "catppuccin/nvim",
-      name = "catppuccin",
+      'EdenEast/nightfox.nvim',
+      lazy = false,
       priority = 1000,
       config = function()
-        require("catppuccin").setup({
-          flavour = "mocha",
-          integrations = {
-            auto_integrations = true,
-          },
-        })
-
-        vim.cmd.colorscheme "catppuccin"
+        vim.cmd.colorscheme 'nightfox'
       end,
     },
 
@@ -101,8 +94,7 @@ require("lazy").setup({
         'nvim-tree/nvim-web-devicons'
       },
       config = function()
-        local bufferline = require('bufferline')
-        bufferline.setup {
+        require('bufferline').setup {
           options = {
             show_buffer_close_icons = false,
             show_close_icon = false,
@@ -114,6 +106,16 @@ require("lazy").setup({
           }
         }
       end,
+    },
+
+    {
+      'lukas-reineke/indent-blankline.nvim',
+      main = 'ibl',
+      opts = {
+        indent = {
+          char = '▏',
+        },
+      },
     },
 
     {
@@ -147,7 +149,7 @@ require("lazy").setup({
   },
 
   -- colorscheme that will be used when installing plugins
-  install = { colorscheme = { "catppuccin" } },
+  -- install = { colorscheme = { "catppuccin" } },
   -- automatically check for plugin updates
   checker = { enabled = true },
 })

@@ -7,6 +7,20 @@ sandbox_mode = "danger-full-access"
 [features]
 web_search_request = true
 
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"]
+
+# [mcp_servers.language-server]
+# command = "/Users/tm/go/bin/mcp-language-server"
+# args = ["-workspace", "/Users/tm/Documents/x/domains", "-lsp", "pyright-langserver", "--", "--stdio"]
+
+# [mcp_servers.language-server.env]
+# PATH = "/Users/tm/go/bin:/opt/homebrew/bin"
+# GOPATH = "/Users/tm/go"
+# GOCACHE = "/Users/tm/Library/Caches/go-build"
+# GOMODCACHE = "/Users/tm/go/pkg/mod"
+
 [model_providers.copilot-api]
 name = "GitHub Copilot"
 base_url = "http://localhost:4141/v1"

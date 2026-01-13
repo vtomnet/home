@@ -7,6 +7,7 @@ export path=(
   ~/.juliaup/bin
   ~/.opencode/bin
   ~/.amp/bin
+  ~/go/bin
   $path
 )
 
